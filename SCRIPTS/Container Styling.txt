@@ -1,0 +1,218 @@
+/* Container Styling */
+.order-container {
+    width: 90%; /* Adjusted for better responsiveness */
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9; /* Softer background for better contrast */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Added shadow for depth */
+}
+
+/* Header Styling */
+.header {
+    background-color: white;
+    color: #ad7831;
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.header h2 {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* Order Details Section */
+.order-details {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ad7831;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.order-details h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* Form Group Styling with Flexbox */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.form-label {
+    flex: 0.3; /* Adjusts label width */
+    margin-right: 15px;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: right; /* Right-align the label */
+}
+
+.form-input {
+    flex: 0.7;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Item Details Section */
+.item-details {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ad7831;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.item-details h2 {
+    color: #ad7831;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+/* Table Styling */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.item-table th,
+.item-table td {
+    padding: 10px;
+    text-align: left;
+    font-size: 14px;
+}
+
+.item-table th {
+    background-color: #ad7831;
+    color: white;
+    font-weight: normal;
+}
+
+.item-table td {
+    border-top: 1px solid #ddd;
+}
+
+.item-table input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Dropdown for Primary Items */
+.dropdown {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: white;
+    width: calc(100% - 20px);
+    z-index: 10;
+}
+
+.dropdown li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.dropdown li:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons Styling */
+.add-item-button,
+.remove-item-button,
+.submit-button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.add-item-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.add-item-button:hover {
+    background-color: #0056b3;
+}
+
+.remove-item-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.remove-item-button:hover {
+    background-color: #c82333;
+}
+
+.submit-button {
+    background-color: #ad7831;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #93662a;
+}
+
+/* Logo Styling */
+.logoContainer {
+    display: flex;
+    justify-content: right;
+    margin-bottom: -40px;
+}
+
+.logo {
+    width: 150px;
+    height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-label {
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .form-input {
+        width: 100%;
+    }
+    
+    .item-table input {
+        font-size: 12px;
+    }
+
+    .header h1 {
+        font-size: 22px;
+    }
+
+    .header h2 {
+        font-size: 16px;
+    }
+}

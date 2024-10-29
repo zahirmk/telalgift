@@ -1,0 +1,177 @@
+/* OrderForm.css */
+
+/* Container Styling */
+.order-container {
+    width: 100%;
+    margin: 10px auto; /* Reduced margin */
+    padding: 15px; /* Reduced padding */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: white;
+    
+    
+}
+
+/* Header Styling */
+.header {
+    background-color: white;
+    color: #ad7831 ;
+    padding: 10px; /* Reduced padding */
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 15px; /* Reduced margin */
+    
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 24px; /* Reduced font size */
+    font-weight: bold;
+    
+}
+
+/* Order Details Section */
+.order-details {
+    margin-bottom: 10px; /* Reduced margin */
+    padding: 10px; /* Reduced padding */
+    border: 1px solid #ad7831 ;
+    border-radius: 8px;
+    background-color: white;
+    
+}
+
+.order-details h2 {
+    color: #007bff;
+    margin-bottom: 1px; /* Reduced margin */
+    
+}
+
+/* Form Group Styling with Flexbox */
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px; /* Reduced margin */
+
+}
+
+.form-label {
+    flex: 1; /* Label will take up 1 unit of space */
+    margin-right: 5px; /* Reduced margin */
+    margin-left :250px ;
+    font-weight: bold;
+    font-size: 12px; /* Reduced font size */
+    
+}
+
+.form-input {
+    width: 40%; /* Adjust this percentage as needed */
+    padding: 5px; /* Reduced padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px; /* Reduced font size */
+    margin-right: 300px; 
+}
+
+/* Item Details Section */
+.item-details {
+    margin-bottom: 10px; /* Reduced margin */
+    padding: 10px; /* Reduced padding */
+    border: 1px solid #ad7831;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.item-details h2 {
+    color: #ad7831;
+    margin-bottom: 10px; /* Reduced margin */
+    margin-top: 5px;
+    font-size: 20px;
+}
+
+/* Table Styling */
+.item-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 5px; /* Reduced margin */
+}
+
+.item-table th,
+.item-table td {
+    /*border: 1px solid #ccc;*/
+    padding: 5px; /* Reduced padding */
+    text-align: left;
+    font-size: 12px; /* Reduced font size */
+    
+}
+
+.item-table th {
+    background-color: #ad7831;
+    color: white;
+    
+}
+
+
+/* Input Styling for Table */
+.item-table input {
+    width: 100%;
+    padding: 4px; /* Reduced padding */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 12px; /* Reduced font size */
+}
+
+.item-table tr td  {
+    margin: 0; /* Ensures there are no margins */
+    padding: 1px; /* Reduced padding for all cells */
+}
+
+
+
+/* Buttons Styling */
+.add-item-button,
+.remove-item-button,
+.submit-button {
+    margin: 5px 0; /* Reduced margin */
+    padding: 4px 12px; /* Reduced padding */
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px; /* Reduced font size */
+}
+
+.add-item-button:hover,
+.remove-item-button:hover,
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.remove-item-button {
+    background-color: #dc3545;
+}
+
+.remove-item-button:hover {
+    background-color: #c82333;
+}
+
+/* Submit Button Styling */
+.submit-button {
+    background-color: #ad7831;
+}
+
+.submit-button:hover {
+    background-color: #93662a;
+}
+
+
+  .logoContainer {
+    display: flex;
+    justify-content: right;
+    margin-bottom: -40px;
+  }
+  
+  .logo {
+    width: 150px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+  }

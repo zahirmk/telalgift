@@ -1,0 +1,97 @@
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const { Pool } = require('pg');
+
+// Create a new Pool instance for PostgreSQL connection
+const pool = new Pool({
+  user: 'openpg', // Replace with your PostgreSQL user
+  host: 'localhost', // PostgreSQL server host
+  database: 'telal', // Your database name
+  password: 'kappil123', // Your PostgreSQL password
+  port: 5432, // Default PostgreSQL port
+});
+
+const app = express();
+
+// Middleware setup
+app.use(bodyParser.json());
+app.use(cors());
+
+// Login endpoint to validate user credentials
+app.post('/login', async (req, res) => {
+  const { email, password ,branch} = req.body;
+  try {
+    // Check if user exists with the provided email and password
+    const result = await pool.query(
+      'SELECT userid,pwd,branch FROM users WHERE userID = $1 AND pwd = $2',
+      [email, password]
+    );
+
+    if (result.rows.length > 0) {
+      // If user is found, return success response
+      //res.status(200).json({ message: 'Login successful', user: result.rows[0] });
+      const { userid, branch } = result.rows[0];
+      res.status(200).json({
+      message: 'Login successful',
+      user: { userid, branch}
+       });
+
+    } else {
+      // If no user found, return error response
+      res.status(401).json({ message: 'Invalid email or password' });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+app.post('/api/OrderForm', async (req, res) => {
+  const { orderDate, customerName, customerMobile, customerEmail, orderItems } = req.body;
+  const client = await pool.connect();
+
+  try {
+    // Start a transaction
+    await client.query('BEGIN');
+
+    // Insert the main order details
+    const orderResult = await client.query(
+      'INSERT INTO ordmaster (orddate, ordcustomer, ordmobile, ordemail) VALUES ($1, $2, $3, $4) RETURNING ordid',
+      [orderDate, customerName, customerMobile, customerEmail]
+    );
+
+    const orderId = orderResult.rows[0].ordid;  // Get the generated order ID
+
+    // Insert into orderdetail for each item
+    const itemPromises = orderItems.map(item => {
+      return client.query(
+        'INSERT INTO orderdetail (detordid, detpriitem, detgiftitem, detqty) VALUES ($1, $2, $3, $4)',
+        [orderId, item.product_name, item.gift_product, item.quantity]
+      );
+    });
+
+    // Wait for all item insertions to complete
+    await Promise.all(itemPromises);
+
+    // Commit the transaction
+    await client.query('COMMIT');
+
+    res.status(201).json({ message: 'Entry Saved Successfully', orderId });
+  } catch (error) {
+    // Rollback transaction in case of error
+    await client.query('ROLLBACK');
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'Failed to create order' });
+  } finally {
+    client.release();
+  }
+});
+
+
+// Start the server on port 5000
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

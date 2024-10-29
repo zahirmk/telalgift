@@ -1,0 +1,204 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+import './OrderForm.css';
+import logo from './Images/TelalImage.png'; 
+import { useLocation } from 'react-router-dom';
+
+// Utility function to format date in DD/MM/YYYY
+
+// const getCurrentDateFormatted = () => {
+//   const today = new Date();
+//   const day = String(today.getDate()).padStart(2, '0'); // Pad with leading zero if needed
+//   const month = String(today.getMonth() + 1).padStart(2, '0'); // Get the correct month (0-indexed)
+//   const year = today.getFullYear();
+//   return `${day}/${month}/${year}`; // Return the formatted date as DD/MM/YYYY
+// };
+
+
+
+function OrderForm( ) {
+  const location = useLocation();
+  const userDetails = location.state?.userDetails;
+  const [orderDate, setOrderDate] = useState(new Date().toISOString().split('T')[0]);
+  //const [orderDate, setOrderDate] = useState(getCurrentDateFormatted());
+  const [customerName, setCustomerName] = useState('');
+  const [customerMobile, setCustomerMobile] = useState('');
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [orderItems, setOrderItems] = useState([{ product_name: '', gift_product: '', quantity: 1 }]);
+
+  const handleItemChange = (index, event) => {
+    const newItems = orderItems.map((item, i) => {
+      if (index === i) {
+        return { ...item, [event.target.name]: event.target.value };
+      }
+      return item;
+    });
+    setOrderItems(newItems);
+  };
+
+  const addItem = () => {
+    setOrderItems([...orderItems, { product_name: '', gift_product: '', quantity: 1 }]);
+  };
+
+  const removeItem = (index) => {
+    setOrderItems(orderItems.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Create an object containing all the order details
+    const orderData = {
+      orderDate,
+      customerName,
+      customerMobile,
+      customerEmail,
+      orderItems,
+    };
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/OrderForm', orderData);
+      console.log('Entry Saved Successfully:', response.data);
+      //alert(response.data.message);
+      alert('Entry Saved Successfully.');
+      // Optionally, reset form fields or show a success message
+
+    //setOrderDate('');
+    
+    setOrderDate(new Date().toISOString().split('T')[0]);
+    setCustomerName('');
+    setCustomerMobile('');
+    setCustomerEmail('');
+    setOrderItems([{ product_name: '', gift_product: '', quantity: 1 }]);
+
+
+
+    } catch (error) {
+      console.error('Error creating order:', error);
+      alert('Failed to create order. Please try again.');
+      // Optionally, show an error message to the user
+    }
+  };
+
+  return (
+    <div className="order-container">
+      <div className="logoContainer">
+        <img src={logo} alt="Logo" className="logo" />
+      </div>
+      <div className="header">
+        <h1>Telal Promotions</h1>
+        <h2>Branch: {userDetails?.branch || 'N/A'}</h2>
+      </div>
+      <form className="order-form" onSubmit={handleSubmit}>
+        <div className="order-details">
+          <h2 style={{ color: '#ad7831', fontSize: '20px' }}>Customer Details</h2>
+          <div className="form-group">
+            <label className="form-label">Order Date:</label>
+            <input
+              type="date"
+              className="form-input"
+              value={orderDate}
+              onChange={(e) => setOrderDate(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Customer Name:</label>
+            <input
+              type="text"
+              className="form-input"
+              value={customerName}
+              onChange={(e) => setCustomerName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Mobile No:</label>
+            <input
+              type="text"
+              className="form-input"
+              value={customerMobile}
+              onChange={(e) => setCustomerMobile(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Email:</label>
+            <input
+              type="email"
+              className="form-input"
+              value={customerEmail}
+              onChange={(e) => setCustomerEmail(e.target.value)}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="item-details">
+          <h2>Item Details</h2>
+          <table className="item-table">
+            <thead>
+              <tr>
+                <th>Primary Product</th>
+                <th>Gift Product</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orderItems.map((item, index) => (
+                <tr key={index}>
+                  <td>
+                    <input
+                      type="text"
+                      name="product_name"
+                      value={item.product_name}
+                      onChange={(e) => handleItemChange(index, e)}
+                      required
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="gift_product"
+                      value={item.gift_product}
+                      onChange={(e) => handleItemChange(index, e)}
+                      required
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="number"
+                      name="quantity"
+                      value={item.quantity}
+                      onChange={(e) => handleItemChange(index, e)}
+                      required
+                    />
+                  </td>
+                  <td>
+                    <button
+                      type="button"
+                      className="remove-item-button"
+                      onClick={() => removeItem(index)}
+                    >
+                      Remove
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button type="button" className="add-item-button" onClick={addItem}>
+            Add Item
+          </button>
+        </div>
+
+        <button type="submit" className="submit-button">
+          Submit Order
+        </button>
+      </form>
+    </div>
+  );
+}
+
+export default OrderForm;
